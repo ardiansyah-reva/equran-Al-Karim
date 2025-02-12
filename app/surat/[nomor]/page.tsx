@@ -58,8 +58,8 @@ export default async function Page({ params }: SuratPropsParams) {
           </p>
           <p className="text-2xl text-center pb-4 "> {surats.tempatTurun}</p>
         </div>
-        {surats.ayat.map((surat) => (
-          <div className="pt-5 px-12 py-12 ">
+        {surats.ayat.map((surat, index) => (
+          <div key={index} className="pt-5 px-12 py-12 ">
             <div className="font-serif shadow-md text-2xl">
               <div className="ukuranAyat flex justify-end gap-10 text-right">
                 <p className="ltr:mr-0 rtl:ml-0">

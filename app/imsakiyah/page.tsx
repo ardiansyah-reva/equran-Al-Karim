@@ -1,16 +1,16 @@
 "use client"
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { Select } from 'flowbite-react'
+import axios from "axios"
+import React, { useEffect, useState } from "react"
+import { Select } from "flowbite-react"
 
 interface JadwalItem {
-  tanggal: string;
-  imsak: string;
-  subuh: string;
-  dzuhur: string;
-  ashar: string;
-  maghrib: string;
-  isya: string;
+  tanggal: string
+  imsak: string
+  subuh: string
+  dzuhur: string
+  ashar: string
+  maghrib: string
+  isya: string
 }
 
 export default function ImsakiyahTable() {
@@ -23,7 +23,11 @@ export default function ImsakiyahTable() {
   const getProvinsi = async () => {
     try {
       const response = await axios.get("https://equran.id/api/v2/imsakiyah/provinsi")
-      setProvinsi(response.data.data)
+      if (Array.isArray(response.data.data)) {
+        setProvinsi(response.data.data)
+      } else {
+        console.error("Invalid data format for provinsi")
+      }
     } catch (error) {
       console.error("Error fetching provinsi:", error)
     }
@@ -32,20 +36,30 @@ export default function ImsakiyahTable() {
   const getKota = async (provinsi: string) => {
     try {
       const response = await axios.post("https://equran.id/api/v2/imsakiyah/kabkota", { provinsi })
-      setKota(response.data.data)
+      if (Array.isArray(response.data.data)) {
+        setKota(response.data.data)
+      } else {
+        console.error("Invalid data format for kota")
+      }
     } catch (error) {
       console.error("Error fetching kota:", error)
     }
   }
 
-  const getJadwal = async (provinsi: string, kota: string) => {
+  const getJadwal = async () => {
     try {
-      const data = {
-        provinsi,
-        kabkota: kota
+      if (!selectedProvinsi || !selectedKota) return
+
+      const response = await axios.post("https://equran.id/api/v2/imsakiyah", {
+        provinsi: selectedProvinsi,
+        kabkota: selectedKota,
+      })
+
+      if (response.data?.data?.[0]?.imsakiyah) {
+        setJadwal(response.data.data[0].imsakiyah)
+      } else {
+        console.error("Invalid data format for jadwal")
       }
-      const response = await axios.post("https://equran.id/api/v2/imsakiyah", data)
-      setJadwal(response.data.data[0].imsakiyah)
     } catch (error) {
       console.error("Error fetching jadwal:", error)
     }
@@ -62,21 +76,20 @@ export default function ImsakiyahTable() {
   }, [selectedProvinsi])
 
   useEffect(() => {
-    if (selectedKota) {
-      getJadwal(selectedProvinsi, selectedKota)
-    }
-  }, [selectedKota])
+    getJadwal()
+  }, [selectedKota, selectedProvinsi]) // Tambah selectedProvinsi untuk mencegah missing dependency
 
   return (
     <div className="bg-gray-900 text-white p-6 rounded-xl shadow-lg">
-      
       <div className="grid grid-cols-2 gap-4">
         <div>
           <h1 className="text-lg font-semibold mb-2">Pilih Provinsi</h1>
           <Select value={selectedProvinsi} onChange={(e) => setSelectedProvinsi(e.target.value)}>
             <option value="">Pilih Provinsi</option>
             {provinsi.map((item, index) => (
-              <option key={index} value={item}>{item}</option>
+              <option key={`${item}-${index}`} value={item}>
+                {item}
+              </option>
             ))}
           </Select>
         </div>
@@ -86,7 +99,9 @@ export default function ImsakiyahTable() {
           <Select value={selectedKota} onChange={(e) => setSelectedKota(e.target.value)}>
             <option value="">Pilih Kota</option>
             {kota.map((item, index) => (
-              <option key={index} value={item}>{item}</option>
+              <option key={`${item}-${index}`} value={item}>
+                {item}
+              </option>
             ))}
           </Select>
         </div>
