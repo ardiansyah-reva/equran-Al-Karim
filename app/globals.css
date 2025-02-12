@@ -14,8 +14,12 @@
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+ .hexagon {
+  width: 50px; /* Lebar */
+  height: 50px; /* Tinggi */
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 }
+ 
+ 
+ 
+  
