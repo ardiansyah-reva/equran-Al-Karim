@@ -75,12 +75,12 @@ export default function SuratPage() {
 
   return (
     <div>
-      <div className="shadow-md pt-7 bg-gradient-to-tr from-gray-200 via-gray-400 to-transparent">
+      <div className="shadow-md pt-7 bg-gray-900">
         <Link href="/surat">
-          <p className="text-4xl text-center mb-1">Surat: {surats.namaLatin}</p>
+          <p className="text-4xl text-center mb-1 text-white">Surat: {surats.namaLatin}</p>
         </Link>
-        <p className="text-2xl text-center pb-1">Ayat: 1-{surats.jumlahAyat}</p>
-        <p className="text-2xl text-center pb-4">{surats.tempatTurun}</p>
+        <p className="text-2xl text-center pb-1 text-white">Ayat: 1-{surats.jumlahAyat}</p>
+        <p className="text-2xl text-center pb-4 text-white">{surats.tempatTurun}</p>
       </div>
       {surats.ayat.map((surat, index) => (
         <div key={index} className="pt-5 px-12 py-12">
@@ -90,8 +90,8 @@ export default function SuratPage() {
               <p dir="rtl" className="font-arabic text-2xl leading-loose">{surat.teksArab}</p>
             </div>
             <div>
-              <i className="text-base text-green-500">{surat.teksLatin}</i>
-              <p className="text-sm font-serif">{surat.teksIndonesia}</p>
+              <i className="text-base text-gray-500">{surat.teksLatin}</i>
+              <p className="text-sm mt-1 font-serif">{surat.teksIndonesia}</p>
             </div>
           </div>
         </div>

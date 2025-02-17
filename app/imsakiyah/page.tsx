@@ -2,6 +2,7 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { Select } from "flowbite-react"
+import Header from "../components/Header"
 
 interface JadwalItem {
   tanggal: string
@@ -80,10 +81,13 @@ export default function ImsakiyahTable() {
   }, [selectedKota, selectedProvinsi]) // Tambah selectedProvinsi untuk mencegah missing dependency
 
   return (
-    <div className="bg-gray-900 text-white p-6 rounded-xl shadow-lg">
+    <div>
+      <Header/>
+    <div className="bg-gray-900 text-white p-6  shadow-lg">
+     <p className="text-center text-4xl font-semibold mt-9 mb-24">JADWAL IMSAKIYAH 2025 (1446 hijriah) </p> 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <h1 className="text-lg font-semibold mb-2">Pilih Provinsi</h1>
+          <h2 className="text-lg font-semibold mb-2">Pilih Provinsi</h2>
           <Select value={selectedProvinsi} onChange={(e) => setSelectedProvinsi(e.target.value)}>
             <option value="">Pilih Provinsi</option>
             {provinsi.map((item, index) => (
@@ -95,7 +99,7 @@ export default function ImsakiyahTable() {
         </div>
 
         <div>
-          <h1 className="text-lg font-semibold mb-2">Pilih Kota/Kabupaten</h1>
+          <h2 className="text-lg font-semibold mb-2">Pilih Kota/Kabupaten</h2>
           <Select value={selectedKota} onChange={(e) => setSelectedKota(e.target.value)}>
             <option value="">Pilih Kota</option>
             {kota.map((item, index) => (
@@ -126,7 +130,7 @@ export default function ImsakiyahTable() {
             {jadwal.map((item, index) => (
               <tr key={index} className="bg-gray-800 border border-gray-700">
                 <td className="px-4 py-2 border border-gray-700 text-center">{index + 1}</td>
-                <td className="px-4 py-2 border border-gray-700">{item.tanggal}</td>
+                <td className="px-4 py-2 border border-gray-700">{item.tanggal} Ramadhan</td>
                 <td className="px-4 py-2 border border-gray-700">{item.imsak}</td>
                 <td className="px-4 py-2 border border-gray-700">{item.subuh}</td>
                 <td className="px-4 py-2 border border-gray-700">{item.dzuhur}</td>
@@ -138,6 +142,7 @@ export default function ImsakiyahTable() {
           </tbody>
         </table>
       </div>
+    </div>
     </div>
   )
 }
