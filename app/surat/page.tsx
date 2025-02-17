@@ -33,7 +33,7 @@ const Surat = async () => {
       <Header/>
     <div className="bg-white ">
       <h1 className="font-bold font-serif text-4xl text-center py-12 ">LIST SURAH</h1>
-      <div className="text-center grid sm:grid-cols-1 md:grid-cols-2 justify-items-center lg:grid-cols-4">
+      <div className="text-center grid sm:grid-cols-1 md:grid-cols-3 justify-items-center lg:grid-cols-4">
         {surats.map((surat) => (
           <Link key={surat.nomor} href={`/surat/${surat.nomor}`}>
             <div className="w-72 mt-5 bg-gray-200 shadow p-2 mb-1 rounded-lg">
