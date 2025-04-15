@@ -36,7 +36,7 @@ const Surat = async () => {
       <div className="text-center grid sm:grid-cols-1 md:grid-cols-3 justify-items-center lg:grid-cols-4">
         {surats.map((surat) => (
           <Link key={surat.nomor} href={`/surat/${surat.nomor}`}>
-            <div className="w-72 mt-5 bg-gray-200 shadow p-2 mb-1 rounded-lg">
+            <div className="w-80 mt-3 bg-gray-200 shadow p-2 mb-1 rounded-lg">
               <div className="grid grid-cols-3 text-black">
                 <div className="pt-2">
                   {/* Menggunakan angka Arab */}
@@ -45,7 +45,7 @@ const Surat = async () => {
                   </p>
                 </div>
                 <div className="pt-2">
-                  <p>{surat.namaLatin}</p>
+                  <p className="font-serif">{surat.namaLatin}</p>
                   <p>{surat.nama}</p>
                 </div>
                 <div>

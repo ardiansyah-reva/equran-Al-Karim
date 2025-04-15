@@ -13,7 +13,7 @@ interface Ayat {
   teksArab: string;
   teksLatin: string;
   teksIndonesia: string;
-  audio: Audio;
+  audio?: Audio;
 }
 
 interface Surat30Juz {
@@ -29,7 +29,7 @@ interface Surat30Juz {
 
 export default function SuratPage() {
   const params = useParams();
-  const nomor = Number(params.nomor); // Konversi ke number
+  const nomor = Number(params.nomor);
   const [surats, setSurats] = useState<Surat30Juz | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -45,7 +45,19 @@ export default function SuratPage() {
         if (!response.ok) throw new Error("Surat tidak ditemukan");
 
         const result = await response.json();
-        setSurats(result.data);
+        let suratData = result.data;
+
+        // Tambahkan Bismillah di awal kecuali Al-Fatihah (1) dan At-Taubah (9)
+        if (nomor !== 1 && nomor !== 9) {
+          suratData.ayat.unshift({
+            nomorAyat: 0,
+            teksArab: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+            teksLatin: "Bismillahirrahmanirrahim",
+            teksIndonesia: "Dengan nama Allah Yang Maha Pengasih, Maha Penyayang",
+          });
+        }
+
+        setSurats(suratData);
       } catch (error) {
         notFound();
       } finally {
@@ -86,7 +98,7 @@ export default function SuratPage() {
         <div key={index} className="pt-5 px-12 py-12">
           <div className="font-serif shadow-md text-2xl">
             <div className="ukuranAyat flex justify-end gap-10 text-right">
-              <p className="ltr:mr-0 rtl:ml-0">{convertToArabicNumber(surat.nomorAyat)}</p>
+              <p className="ltr:mr-0 rtl:ml-0">{surat.nomorAyat !== 0 ? convertToArabicNumber(surat.nomorAyat) : ""}</p>
               <p dir="rtl" className="font-arabic text-2xl leading-loose">{surat.teksArab}</p>
             </div>
             <div>
