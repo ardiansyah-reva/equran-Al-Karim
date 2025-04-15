@@ -53,7 +53,7 @@ export default function SuratPage() {
             nomorAyat: 0,
             teksArab: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
             teksLatin: "Bismillahirrahmanirrahim",
-            teksIndonesia: "Dengan nama Allah Yang Maha Pengasih, Maha Penyayang",
+            teksIndonesia: "Dengan menyebut nama Allah yang Maha Pengasih dan Maha Penyayang",
           });
         }
 
